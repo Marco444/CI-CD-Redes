@@ -1,9 +1,9 @@
-name: Deploy  
+name: Deploy dev 
 
 on:
   push:
     branches:
-      - deploy
+      - dev
 
 jobs:
   terraform:
