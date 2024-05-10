@@ -90,10 +90,10 @@ resource "aws_instance" "ec2" {
   ami           = data.aws_ami.amazon_linux.id
   instance_type = var.instance_type
   subnet_id     = aws_subnet.subnet.id
-  security_groups = [aws_security_group.sg.name]
+  vpc_security_group_ids = [aws_security_group.sg.id]
 
   tags = {
-    Name = var.name
+    Name = "MyEC2Instance"
   }
 
   user_data = <<-EOF
