@@ -2,6 +2,16 @@ provider "aws" {
   region = var.aws_region
 }
 
+terraform {
+  backend "s3" {
+    bucket         = "ci-cd-state-2024"
+    key            = "terraform.tfstate"
+    region         = "us-east-1"     
+    encrypt        = true
+  }
+}
+
+
 # Data source to get the latest Amazon Linux AMI
 data "aws_ami" "amazon_linux" {
   most_recent = true
