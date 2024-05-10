@@ -43,6 +43,17 @@ resource "aws_subnet" "subnet" {
     Name = "ExampleSubnet"
   }
 }
+# Create a second subnet in a different Availability Zone
+resource "aws_subnet" "subnet2" {
+  vpc_id                  = aws_vpc.vpc.id
+  cidr_block              = "10.0.2.0/24"
+  availability_zone       = "us-east-1b"  # Change the AZ to a different one from the first subnet
+  map_public_ip_on_launch = false
+
+  tags = {
+    Name = "ExampleSubnet2"
+  }
+}
 
 # Create a route table
 resource "aws_route_table" "rt" {
@@ -112,7 +123,7 @@ resource "aws_lb" "elb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = [aws_subnet.subnet.id]
+  subnets            = [aws_subnet.subnet.id, aws_subnet.subnet2.id]  # Include both subnet IDs
 }
 
 # Target Group
