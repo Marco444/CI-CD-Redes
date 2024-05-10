@@ -85,6 +85,7 @@ resource "aws_security_group" "sg" {
   }
 }
 
+
 # EC2 Instance
 resource "aws_instance" "ec2" {
   ami           = data.aws_ami.amazon_linux.id
