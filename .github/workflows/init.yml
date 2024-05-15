@@ -23,6 +23,12 @@ jobs:
     - name: List repository contents
       run: ls -R
 
+    - name: List LendARead2-AWS directory contents
+      run: ls -R LendARead2-AWS
+
+    - name: List terraform directory contents
+      run: ls -R LendARead2-AWS/terraform
+
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
       with:
