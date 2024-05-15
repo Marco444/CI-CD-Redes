@@ -2,8 +2,8 @@ name: Initialize Terraform Backend
 
 on:
   push:
-    branches:
-      - dev
+    tags:
+      - init
 
 jobs:
   terraform-init:
