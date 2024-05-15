@@ -27,6 +27,7 @@ jobs:
 
     - name: Initialize Terraform backend resources
       run: |
-        cd LendARead2-AWS/terraform/init
+        pwd
+        cd ./LendARead2-AWS/terraform/init
         terraform init
         terraform apply --auto-approve
