@@ -19,15 +19,13 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
+      with:
+        submodules: true
 
-    - name: List repository contents
-      run: ls -R
-
-    - name: List LendARead2-AWS directory contents
-      run: ls -R LendARead2-AWS
-
-    - name: List terraform directory contents
-      run: ls -R LendARead2-AWS/terraform
+    - name: Initialize submodules
+      run: |
+        git submodule init
+        git submodule update
 
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
@@ -36,6 +34,6 @@ jobs:
 
     - name: Initialize Terraform backend resources
       run: |
-        cd "LendARead2-AWS/terraform/init"
+        cd LendARead2-AWS/terraform/init
         terraform init
         terraform apply --auto-approve
