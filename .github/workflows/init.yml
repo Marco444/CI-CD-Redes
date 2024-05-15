@@ -1,12 +1,12 @@
-name: Deploy dev 
+name: Initialize Terraform Backend
 
 on:
   push:
-    branches:
-      - dev
+    tags:
+      - init
 
 jobs:
-  terraform:
+  terraform-init:
     runs-on: ubuntu-latest
     environment: aws
     
@@ -30,24 +30,3 @@ jobs:
         cd terraform/init
         terraform init
         terraform apply --auto-approve
-
-    - name: Initialize Terraform
-      run: |
-        cd terraform/main
-        terraform init
-
-    - name: Plan Terraform changes
-      run: |
-        cd terraform/main
-        terraform plan -out=tfplan
-
-    - name: Apply Terraform changes
-      run: |
-        cd terraform/main
-        terraform apply --auto-approve tfplan
-
-    - name: Clean up
-      run: |
-        cd terraform/main
-        rm tfplan
-
