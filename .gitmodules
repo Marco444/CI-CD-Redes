@@ -1,0 +1,3 @@
+[submodule "LendARead2-AWS"]
+	path = LendARead2-AWS
+	url = https://github.com/Marco444/LendARead2-AWS
