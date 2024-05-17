@@ -16,19 +16,20 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
       TF_VAR_aws_region: "us-east-1"
-      TF_VAR_bucket_name: ${{ secrets.S3_TERRAFORM_STATE_NAME}}
-      TF_VAR_dynamodb_table_name: ${{ secrets.DYNAMODB_TERRAFORM_LOCK_NAME}}
+      TF_VAR_bucket_name: ${{ secrets.S3_TERRAFORM_STATE_NAME }}
+      TF_VAR_dynamodb_table_name: ${{ secrets.DYNAMODB_TERRAFORM_LOCK_NAME }}
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        submodules: true
+        submodules: true  # Initialize submodules
 
-    - name: Initialize submodules
+    - name: Checkout CI-CD branch for LendARead2 submodule
       run: |
-        git submodule init
-        git submodule update
+        cd LendARead2
+        git checkout CI-CD
+        git pull origin CI-CD
 
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
