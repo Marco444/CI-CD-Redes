@@ -27,7 +27,7 @@ jobs:
 
     - name: Checkout CI-CD branch for LendARead2 submodule
       run: |
-        cd LendARead2
+        cd LendARead2-AWS
         git checkout CI-CD
         git pull origin CI-CD
 
