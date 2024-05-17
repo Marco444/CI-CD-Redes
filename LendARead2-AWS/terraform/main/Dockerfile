@@ -14,9 +14,12 @@ ENV M2_HOME /opt/apache-maven-3.6.3
 ENV MAVEN_HOME /opt/apache-maven-3.6.3
 ENV PATH $CATALINA_HOME/bin:$M2_HOME/bin:$PATH
 
-# Install required packages
 RUN apt-get update && \
-    apt-get install -y wget git
+    apt-get install -y wget git curl software-properties-common && \
+    curl -sL https://deb.nodesource.com/setup_14.x | bash - && \
+    apt-get install -y nodejs && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Download and install Tomcat 7
 RUN wget https://archive.apache.org/dist/tomcat/tomcat-7/v7.0.109/bin/apache-tomcat-7.0.109.tar.gz -O /tmp/tomcat7.tar.gz && \

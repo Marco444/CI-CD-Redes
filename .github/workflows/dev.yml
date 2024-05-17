@@ -11,31 +11,20 @@ jobs:
     environment: aws
     
     env:
-      #Access tokens
+      AWS_DEFAULT_REGION: "us-east-1"
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
-
-      #Architecture variables
       TF_VAR_aws_region: "us-east-1"
       TF_VAR_role: "LabRole"
       TF_VAR_ecs_task_cpu_architecture: "ARM_64"
-
-      #Terraform state variables
-      AWS_REGION: ${{ secrets.AWS_REGION}}}
-      AWS_BUCKET_NAME_TERRAFORM_STATE: ${{ secrets.S3_TERRAFORM_STATE_NAME}}
-      AWS_DYNAMODB_NAME: ${{ secrets.DYNAMODB_TERRAFORM_LOCK_NAME}}
+      AWS_REGION: "us-east-1"
+      AWS_BUCKET_NAME_TERRAFORM_STATE: ${{ secrets.S3_TERRAFORM_STATE_NAME }}
+      AWS_DYNAMODB_NAME: ${{ secrets.DYNAMODB_TERRAFORM_LOCK_NAME }}
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-      with:
-        submodules: true
-
-    - name: Initialize submodules
-      run: |
-        git submodule init
-        git submodule update
 
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
@@ -45,16 +34,13 @@ jobs:
     - name: Create Terraform backend configuration
       run: |
         cd LendARead2-AWS/terraform/main
-        envsubst < backend.tpl > backend.tf
+        sed "s|\${bucket}|$AWS_BUCKET_NAME_TERRAFORM_STATE|g" backend.tpl > backend.tf
+        sed -i "s|\${region}|$AWS_REGION|g" backend.tf
+        sed -i "s|\${dynamodb_table}|$AWS_DYNAMODB_NAME|g" backend.tf
 
     - name: Initialize Terraform backend resources
       run: |
         cd LendARead2-AWS/terraform/main
         terraform init
-        terraform apply --auto-approve
-    - name: Initialize Terraform backend resources
-      run: |
-        cd LendARead2-AWS/terraform/main
-        terraform init
-        terraform apply --auto-approve
+        terraform apply -auto-approve -var-file=sample.tfvars -lock=false
 

@@ -23,13 +23,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        submodules: true  # Initialize submodules
-
-    - name: Checkout CI-CD branch for LendARead2 submodule
-      run: |
-        cd LendARead2-AWS
-        git checkout CI-CD
-        git pull origin CI-CD
+        submodules: true  # Though not needed for subtree, it's harmless if there are no submodules
 
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
