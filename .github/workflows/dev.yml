@@ -34,7 +34,6 @@ jobs:
     - name: Create Terraform backend configuration
       run: |
         cd LendARead2-AWS/terraform/main
-        # Ensure that the environment variables are replaced correctly
         sed "s|\${bucket}|$AWS_BUCKET_NAME_TERRAFORM_STATE|g" backend.tpl > backend.tf
         sed -i "s|\${region}|$AWS_REGION|g" backend.tf
         sed -i "s|\${dynamodb_table}|$AWS_DYNAMODB_NAME|g" backend.tf
