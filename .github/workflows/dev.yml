@@ -21,7 +21,7 @@ jobs:
       AWS_REGION: "us-east-1"
       AWS_BUCKET_NAME_TERRAFORM_STATE: ${{ secrets.S3_TERRAFORM_STATE_NAME }}
       AWS_DYNAMODB_NAME: ${{ secrets.DYNAMODB_TERRAFORM_LOCK_NAME }}
-          TF_LOG: DEBUG
+      TF_LOG: DEBUG
 
     steps:
     - name: Checkout repository
