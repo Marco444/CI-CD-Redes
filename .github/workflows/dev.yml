@@ -32,12 +32,6 @@ jobs:
       with:
         terraform_version: 1.0.0
 
-    - name: Format and validate Terraform code
-      run: |
-        cd LendARead2-AWS/terraform/main
-        terraform fmt -check
-        terraform validate
-
     - name: Create Terraform backend configuration
       run: |
         cd LendARead2-AWS/terraform/main
