@@ -14,6 +14,7 @@ module "ecr" {
   repository_name      = var.ecr_name
   image_tag_mutability = var.ecr_mutability
   branch               = var.branch_env
+  lb_url               = module.alb.alb_dns_name
 }
 
 module "ecs" {

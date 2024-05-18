@@ -17,3 +17,8 @@ variable "branch" {
   type        = string
   description = "Branch of project to pull docker image"
 }
+
+variable "lb_url" {
+  type        = string
+  description = "ALB url"
+}
