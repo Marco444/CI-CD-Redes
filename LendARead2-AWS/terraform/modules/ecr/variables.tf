@@ -13,3 +13,7 @@ variable "image_tag_mutability" {
   description = "Tag mutability setting of the repository"
 }
 
+variable "branch" {
+  type        = string
+  description = "Branch of project to pull docker image"
+}

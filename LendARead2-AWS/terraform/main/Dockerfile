@@ -34,6 +34,7 @@ RUN wget https://archive.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-mav
 
 # Clone the repository
 RUN git config --global http.postBuffer 1048576000  # Set buffer to 1000MB
+RUN echo "The value of BRANCH_NAME is: $BRANCH_NAME"
 RUN for i in {1..5}; do git clone -b ${BRANCH_NAME} "https://github.com/Marco444/CI-CD.git" "/usr/src/CI-CD" && break || sleep 5; done
 
 # Change the working directory
