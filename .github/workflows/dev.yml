@@ -11,6 +11,7 @@ jobs:
     environment: aws
     
     env:
+      TF_VAR_branch_env: "dev" 
       AWS_DEFAULT_REGION: "us-east-1"
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -21,6 +22,7 @@ jobs:
       AWS_REGION: "us-east-1"
       AWS_BUCKET_NAME_TERRAFORM_STATE: ${{ secrets.S3_TERRAFORM_STATE_NAME }}
       AWS_DYNAMODB_NAME: ${{ secrets.DYNAMODB_TERRAFORM_LOCK_NAME }}
+      TF_LOG: DEBUG
 
     steps:
     - name: Checkout repository
@@ -44,3 +46,7 @@ jobs:
         terraform init
         terraform apply -auto-approve -var-file=sample.tfvars -lock=false
 
+    - name: Output Terraform state
+      run: |
+        cd LendARead2-AWS/terraform/main
+        terraform output

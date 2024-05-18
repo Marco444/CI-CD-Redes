@@ -6,49 +6,49 @@ variable "aws_region" {
 
 variable "cluster_name" {
   description = "Name for cluster running tasks"
-  type = string
-  default = "lendaread_cluster"
+  type        = string
+  default     = "lendaread_cluster"
 }
 
 variable "task_family" {
   description = "Name for task family"
-  type = string
-  default = "lendaread-tasks"
+  type        = string
+  default     = "lendaread-tasks"
 }
 
 variable "ecr_name" {
   description = "Name of ECR"
-  type = string
-  default = "lendaread_ecr"
+  type        = string
+  default     = "lendaread_ecr"
 }
 
 variable "ecr_mutability" {
   description = "Mutability of ECR"
-  type = string
-  default = "MUTABLE"
+  type        = string
+  default     = "MUTABLE"
 }
 
 variable "alb_name" {
   description = "ALB name"
-  type = string
-  default = "lendaread-alb"
+  type        = string
+  default     = "lendaread-alb"
 }
 
 variable "alb_tg" {
   description = "ALB target group"
-  type = string
-  default = "lendaread-tg"
+  type        = string
+  default     = "lendaread-tg"
 }
 
 variable "alb_health_path" {
   description = "ALB Health Path"
-  type = string
-  default = "/"
+  type        = string
+  default     = "/"
 }
 
 variable "role" {
   description = "Role for ECS"
-  type = string
+  type        = string
 }
 
 variable "rds_instance_class" {
@@ -95,22 +95,28 @@ variable "rds_db_name" {
 
 variable "ecs_task_cpu_architecture" {
   description = "cpu architecture for ecs task instance"
-  type = string
+  type        = string
 }
 
 variable "grafana_name" {
   description = "Grafana's workspace name"
-  type = string
-  default = "alb-grafana-workspace"
+  type        = string
+  default     = "alb-grafana-workspace"
 }
 
 variable "s3_backend_bucket_name" {
   description = "Name to store state of infraestructure"
-  type = string
-  default = "terraform-state"
+  type        = string
+  default     = "terraform-state"
 }
 
 variable "multi_az_rds" {
   description = "Boolean to determine RDS replication"
-  type = bool
+  type        = bool
+}
+
+variable "branch_env" {
+  description = "Branch to pull the repository"
+  type        = string
+  default     = "main"
 }
