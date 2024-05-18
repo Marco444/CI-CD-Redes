@@ -15,6 +15,7 @@ For example, let's imagine the user Marco, who enjoys reading philosophy in mult
 
 The LendARead architecture is deployed through terraform as part of a 3-tier architecture. This is a simplified version as it does not hold the SPA in a S3 bucket, but it clearly exemplifies a correct separation of concerns
 
+![Cloud Diagram](LendARead2/cloud.png)
 
 ## CI/CD
 
