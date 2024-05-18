@@ -21,6 +21,7 @@ jobs:
       AWS_REGION: "us-east-1"
       AWS_BUCKET_NAME_TERRAFORM_STATE: ${{ secrets.S3_TERRAFORM_STATE_NAME }}
       AWS_DYNAMODB_NAME: ${{ secrets.DYNAMODB_TERRAFORM_LOCK_NAME }}
+          TF_LOG: DEBUG
 
     steps:
     - name: Checkout repository
@@ -30,6 +31,12 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 1.0.0
+
+    - name: Format and validate Terraform code
+      run: |
+        cd LendARead2-AWS/terraform/main
+        terraform fmt -check
+        terraform validate
 
     - name: Create Terraform backend configuration
       run: |
@@ -44,3 +51,7 @@ jobs:
         terraform init
         terraform apply -auto-approve -var-file=sample.tfvars -lock=false
 
+    - name: Output Terraform state
+      run: |
+        cd LendARead2-AWS/terraform/main
+        terraform output
