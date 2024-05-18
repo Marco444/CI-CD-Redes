@@ -4,7 +4,7 @@ This is a project that seeks to provide a continuos integration and deployment s
 
 
 ## LendARead's Goal
-![Lend a read logo](LLendARead2-AWS/LendARead2/frontend/public/static/logo-claro.png)
+![Lend a read logo](LendARead2-AWS/LendARead2/frontend/public/static/logo-claro.png)
 
 The goal of the web application is to create a community of readers, where all of them can upload their books and request loans from each other. The aim is to allow readers to access books that would not normally be easily accessible.
 
