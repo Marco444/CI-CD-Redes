@@ -4,7 +4,7 @@ This is a project that seeks to provide a continuos integration and deployment s
 
 
 ## LendARead's Goal
-![Lend a read logo](LLendARead2-AWS/LendARead2/frontend/public/static/logo-claro.png)
+![Lend a read logo](LendARead2-AWS/LendARead2/frontend/public/static/logo-claro.png)
 
 The goal of the web application is to create a community of readers, where all of them can upload their books and request loans from each other. The aim is to allow readers to access books that would not normally be easily accessible.
 
@@ -15,7 +15,7 @@ For example, let's imagine the user Marco, who enjoys reading philosophy in mult
 
 The LendARead architecture is deployed through terraform as part of a 3-tier architecture. This is a simplified version as it does not hold the SPA in a S3 bucket, but it clearly exemplifies a correct separation of concerns
 
-![Cloud Diagram](LendARead2/cloud.png)
+![Cloud Diagram](LendARead2-AWS/cloud.png)
 
 ## CI/CD
 
