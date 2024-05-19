@@ -1,0 +1,455 @@
+commit d2538ff5112645464f08bf69ec0ff449605600fc
+Merge: 832d454 390c567
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Sun May 19 17:29:14 2024 -0300
+
+    Merge branch 'dev' of https://github.com/Marco444/CI-CD into dev
+
+commit 832d4540389db974f87b6d164541c62180452da7
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Sun May 19 17:13:30 2024 -0300
+
+    minor change
+
+commit 390c5670ae98f0a90a48b07bffacb46846ac6620
+Author: Marco Scilipoti <mscilipoti@itba.edu.ar>
+Date:   Sat May 18 11:16:47 2024 -0300
+
+    Update README.md
+
+commit e6611c196da45093431410ec6996ae724ad85671
+Author: Marco Scilipoti <mscilipoti@itba.edu.ar>
+Date:   Sat May 18 11:16:21 2024 -0300
+
+    Update README.md
+
+commit e8e8ed56ef2a9f01596e2ac12830b619fd415fe4
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Sat May 18 11:15:20 2024 -0300
+
+    updated README.md and lb for docker
+
+commit 66929835435254ee4420c8d54f8eb04dd896606c
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Sat May 18 08:50:55 2024 -0300
+
+    updated a bit the readme.md
+
+commit 4418209d446656737e6aaf9cdca814a1c29494d1
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Sat May 18 08:32:56 2024 -0300
+
+    made repo public
+
+commit 98df67537a596d5aac9f639c64a57436096ee1e1
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Sat May 18 08:27:33 2024 -0300
+
+    updated dockerfile
+
+commit 0f351017104ac82e038067e2542f53c64a48cc81
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Sat May 18 08:26:37 2024 -0300
+
+    updated dockerfile
+
+commit 3959d8771725901343863f7224cdfb4a52b43f58
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Sat May 18 08:25:33 2024 -0300
+
+    updated dockerfile
+
+commit d1fdd9714d23862d50379a32efd395a39a85e41f
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Sat May 18 08:20:13 2024 -0300
+
+    propagated branch of git clone from dockerfile all the way to github action
+
+commit bc9dddf7d95c3bd4aa212d9e9898b3ecf86071c5
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Sat May 18 08:07:23 2024 -0300
+
+    updated dockerfile
+
+commit 39be1f7ad2f6d69cd643e6abc97b9ce2a6374859
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Sat May 18 08:01:55 2024 -0300
+
+    updated dockerfile
+
+commit 4e3a0f7b23ef9e585142a80c408f11318e88f6ad
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Sat May 18 07:57:18 2024 -0300
+
+    updated dockerfile to download the corresponding's action branch
+
+commit eed1ec1e0dceb7570b4dcbee9ec9d2ace9772a47
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Sat May 18 07:47:23 2024 -0300
+
+    commented frontend tests
+
+commit 2b85f8cdf0109c7494abff225db1729d14c7b71c
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Sat May 18 07:42:22 2024 -0300
+
+    added more logging to dev action
+
+commit 567e521e75183c6d31be72697b26d14a42e7c364
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Sat May 18 07:40:19 2024 -0300
+
+    added more logging to dev action
+
+commit 19a92efd62e22d63818f449c5bb8ee91f1888e28
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Sat May 18 07:38:57 2024 -0300
+
+    added more logging to dev action
+
+commit f5f9f0e0843ad78f343807fea96dc91e2d0a7784
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 20:20:00 2024 -0300
+
+    last pushed failed not know why, no idea as just changed CIDR but dockerfile failed
+
+commit 268cdf55ed29fb7ad44754f8c6bcedbe40f8a770
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 20:09:48 2024 -0300
+
+    changed CIDR of db_subnet to check the github action only applies this change
+
+commit b36098793f3e39117b48c5fc175536db2630c860
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 19:56:00 2024 -0300
+
+    updated dockerfile
+
+commit a47c4654afac3d03e9ba7b53a3fe3ba28243fbdb
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 19:34:06 2024 -0300
+
+    testing dev action
+
+commit ce222c23a27eff06edbe354d6ab6edb2d8c5d200
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 19:32:57 2024 -0300
+
+    testing dev action
+
+commit 093e85fba6657e696a73d0b2b9371ea7b898b22a
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 19:31:56 2024 -0300
+
+    testing dev action
+
+commit 9dfe5983c4af99884375699d77926dabf9e06178
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 19:30:49 2024 -0300
+
+    testing dev action
+
+commit 4b6300dceba879d52d1e8720122097b56508a6ff
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 19:26:01 2024 -0300
+
+    testing dev action
+
+commit e2870ef1bab1e45036a7a137be94527851d5dd30
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 19:24:42 2024 -0300
+
+    testing dev action
+
+commit 9b1f476ad7ebdd3e5e34e58afe21be48980898cf
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 19:23:51 2024 -0300
+
+    testing dev action
+
+commit 2de6fa9deb765eb10a9816acb7b7dc49186524a0
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 19:18:09 2024 -0300
+
+    updated init action
+
+commit 0456a301c611bcb0101b1dd0c737034c89a45f18
+Merge: 7aed1ad 7092ae5
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 19:14:18 2024 -0300
+
+    Merge commit '7092ae5c847125521a79dff9f8456864f4bdb158' as 'LendARead2-AWS'
+
+commit 7092ae5c847125521a79dff9f8456864f4bdb158
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 19:14:18 2024 -0300
+
+    Squashed 'LendARead2-AWS/' content from commit 3b64d48
+    
+    git-subtree-dir: LendARead2-AWS
+    git-subtree-split: 3b64d48c731b108a00117894f67d04684cc9aaed
+
+commit 7aed1ad49de96abfea06184d9f0ac0e4b9e787ea
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 19:12:52 2024 -0300
+
+    Removed submodule
+
+commit 1d432f8480912bc4d011e96e599df5a244547ff6
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 19:03:02 2024 -0300
+
+    changed init
+
+commit 627e32da4870563cd1f4a1fb4989aee254c092a5
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 19:00:31 2024 -0300
+
+    updated init action, submodules are being a bit bothersome
+
+commit c8e188f35218ca82fc42c40ab7afe752cd993630
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 18:48:27 2024 -0300
+
+    added .tpl to automatically add env variables to backend.tf before terraform uses it
+
+commit 23c86e7a961765193be340be5f12ad4b9f5c7886
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 14:03:59 2024 -0300
+
+    added .tpl to automatically add env variables to backend.tf before terraform uses it
+
+commit 063d41fa21be6018e75f4b605282a7d6fcb4428f
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 17 13:53:07 2024 -0300
+
+    updated init action to use secrets
+
+commit b2c96054069bb934b9189784adf318651c418dc6
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Wed May 15 19:40:46 2024 -0300
+
+    added init tag
+
+commit 71ebb5770c5230685674e103a19799830e2ebd91
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Wed May 15 19:37:12 2024 -0300
+
+    updated variables
+
+commit a0e28a3804c0ca012262c1cc22cadb165bf1f02e
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Wed May 15 19:32:31 2024 -0300
+
+    added tf vars and changed to dev branch for testing the init action
+
+commit ed8581af0ac785ed4feabc6a10bf19cf421bc051
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Wed May 15 19:24:44 2024 -0300
+
+    init action problem was on the lack of cloning with submodules
+
+commit 142d35a04c0402865f233f5f0b77b0d195568cdc
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Wed May 15 19:22:21 2024 -0300
+
+    debugging init action
+
+commit 9b374c57878a49ff2dcd89fe9a179ec998da894b
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Wed May 15 19:20:33 2024 -0300
+
+    updated init action
+
+commit 9c517c513b63b1ffa1943be30ac9e1bda983d131
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Wed May 15 19:18:22 2024 -0300
+
+    doing ls in action
+
+commit 3504dcbf5a1afeedd71ff80b0aba5b626b4106fb
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Wed May 15 19:16:30 2024 -0300
+
+    updated init action
+
+commit a28eddd48fe3e579913f18bcb38a7d191663f173
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Wed May 15 19:08:00 2024 -0300
+
+    added init action
+
+commit 977596a19d51d0d279eac1dd5b3a669ce63c3f81
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Wed May 15 19:06:37 2024 -0300
+
+    added init action
+
+commit 3580fe007b7ebd95c2cfeb44c6fb19d4da77a7ed
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Wed May 15 18:37:41 2024 -0300
+
+    added submodule to PAW deployment through terraform
+
+commit b4f269406c9b7de8c38329be8ee2d82374bbc08c
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 19:01:58 2024 -0300
+
+    added actions
+
+commit f2d110c6df7ac092bc2185bf6d15c7b92abf472d
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 18:52:24 2024 -0300
+
+    added change to github actions to use bucket
+
+commit e08f7178b498f0ed01c8df435ec50ee7c4cf72e7
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 17:37:49 2024 -0300
+
+    will need to update the github action to clean-up/not rebuild the whole architecture on every push
+
+commit 0557b60e5238e6a70ddef67d87bfd1f1a08a05c4
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 17:25:51 2024 -0300
+
+    added new subnet to allow for terraform error
+
+commit 08e8f54fc5766031967d8b659fb95554147700b8
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 17:21:27 2024 -0300
+
+    added load balancer to EC2 and removed public IP
+
+commit 6ad7e06b9652a0af7e8a12bc25062aa6a302cbed
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 16:55:46 2024 -0300
+
+    new deploy
+
+commit d6c07df0a6380774b4d9b3f41981d3c6df43d8dc
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 16:48:49 2024 -0300
+
+    changed conflicting ec2
+
+commit d5443946346f370ed8f79675a63bb32b97a13d6a
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 16:45:50 2024 -0300
+
+    added vpc and security groups
+
+commit b9f5a06e6a1e71a938be7a085b259a2bb3374438
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 16:27:52 2024 -0300
+
+    WORKING! needed to add session token to secrets
+
+commit 78207f58dfa15bcb396a1e1216584ac2509b922f
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 16:25:12 2024 -0300
+
+    corrected secret credentials
+
+commit 6b597e3b6e6d712b68c22a771bef327fb29d1925
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 16:23:44 2024 -0300
+
+    corrected secret credentials
+
+commit 47ba84b29d5ed29eee82b2942bd9b704e3576a4d
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 16:22:00 2024 -0300
+
+    corrected secret credentials
+
+commit 5c6eb78b544630c88b0775fbb549710e52d28152
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 16:19:46 2024 -0300
+
+    hardcoded aws credentials valid only 4 hours
+
+commit 4362e0f715ba3dd61885178f0e7ee9fbf24c1970
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 16:13:23 2024 -0300
+
+    barebones ec2 demo
+
+commit 20c7aa3cea856f4559df22de6608143907c616c0
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 16:11:38 2024 -0300
+
+    barebones ec2 demo
+
+commit fdb535663adb643cae043afe0a625bb4488c7dc7
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 15:57:24 2024 -0300
+
+    removed s3
+
+commit a9f80e2932ed42637ab6edf3f9d61b54c827da3d
+Merge: 9b583d6 e76f2b1
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 15:54:07 2024 -0300
+
+    Merge branch 'dev' of https://github.com/Marco444/CI-CD into dev
+
+commit 9b583d652f5090e9efecf5d64a40e0b427164603
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 15:53:43 2024 -0300
+
+    changed env variables
+
+commit e76f2b1f622225dffae1bd892eb9a28748a6ccfc
+Author: marco444 <elscili444.code@gmail.com>
+Date:   Fri May 10 14:56:45 2024 -0300
+
+    new deplo
+
+commit d2eb16c59fdb5fc477d653f7ee7741cc8202bc76
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 14:38:40 2024 -0300
+
+    first deploymnet
+
+commit 189ba77ce821dc9c5014a9774c4da35cb2eaf80c
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 14:37:14 2024 -0300
+
+    added changes to terraform and seeing the deployment
+
+commit 85b56515d3a1ec9b741349a5803e5eba92830142
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 14:11:46 2024 -0300
+
+    added first github action to deploy terraform when pushed changes to Deploy dev 2
+
+commit dbffaf95df7384c335b017dbfe078d32d3400c8a
+Author: Marco4444 <mscilipoti@itba.edu.ar>
+Date:   Fri May 10 14:10:57 2024 -0300
+
+    added first github action to deploy terraform when pushed changes to Deploy dev
+
+commit 3312735d38e00d9995663d00f295757355a4ed03
+Author: marco444 <elscili444.code@gmail.com>
+Date:   Fri May 10 13:52:03 2024 -0300
+
+    added gitignore file for not loading backup state of terrafun runs and other things that should not be pushed
+
+commit 437176e3d9a3856cc87be46db6b02f671f96013f
+Author: marco444 <elscili444.code@gmail.com>
+Date:   Fri May 10 13:50:26 2024 -0300
+
+    added default terraform variables
+
+commit 83796a2ce792922d97efc6276cfb16e4a909e590
+Author: marco444 <elscili444.code@gmail.com>
+Date:   Fri May 10 13:49:18 2024 -0300
+
+    added initial sample terraform file that creates EC2 and S3 and the prod tfvariables
+
+commit 779a33d96d261e8e6f6dc5d0dac96a53a313c671
+Author: marco444 <elscili444.code@gmail.com>
+Date:   Fri May 10 13:44:56 2024 -0300
+
+    first commit
