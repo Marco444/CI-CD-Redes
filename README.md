@@ -17,14 +17,8 @@ The LendARead architecture is deployed through terraform as part of a 3-tier arc
 
 ![Cloud Diagram](LendARead2-AWS/cloud.png)
 
-## CI/CD
+## CI/CD Requirements
 
-The design of the CI/CD is based on 3 axis
-- Multi enviroment deployment: different branch defines a different enviroment 
-- Notification service:
-- 
-
-# Project Requirements
 Create a pipeline that includes the following elements:
 
 - Have a code repository in Git that, every time a push occurs, builds the code and deploys it in a container (on-premise with Docker, deploying it in Kubernetes on-premise or using EKS or ECS on AWS), on a virtual machine, or in a serverless execution service (for example, Lambda).
