@@ -41,7 +41,16 @@ jobs:
           java-version: 8
           maven-version: 3.9.1
           checkout-token: ${{ github.token }}
+      - name: Set up SSL keys
+        run: |
+          sudo apt update
+          openssl s_client -showcerts -connect maven.java.net:443 < /dev/null 2> /dev/null | openssl x509 -outform PEM > maven_cert.pem
+          sudo keytool -import -trustcacerts -file maven_cert.pem -alias maven-snapshot -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -noprompt
       - name: "DELTE ME: Test java version"
         run: |
           java -version
           mvn --version
+      - name: Run Maven Tests
+        run: |
+          cd LendARead2-AWS/LendARead2/
+          mvn clean test
