@@ -1,0 +1,56 @@
+name: Testing
+on:
+  pull_request:
+    types:
+    - opened
+    - reopened
+    - synchronize
+    - edited
+    branches:
+    - dev
+
+jobs:
+  check-valid-PR:
+    runs-on: ubuntu-latest
+    outputs:
+      VERSIONING: ${{ steps.check-title.outputs.VERSIONING }}
+    steps:
+      - name: Check PR title
+        id: check-title
+        run: |
+          VERSIONING=$(echo ${{ github.event.pull_request.title }} | grep --color=never -oE "^(MAJOR|MINOR|PATCH){1}")
+          echo "VERSIONING=$(echo $VERSIONING)" >> $GITHUB_OUTPUT
+      - name: Notify Wrong PR
+        if: "${{ steps.check-title.outputs.VERSIONING == '' }}"
+        run: echo "WRONG TITLE"
+  
+  install-mvn-and-tests:
+    runs-on: ubuntu-latest
+    needs: check-valid-PR
+    if: ${{ needs.check-valid-PR.outputs.VERSIONING != '' }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Checkout Current Branch
+        run: |
+          git fetch
+          git checkout ${{ github.event.pull_request.head.ref }}
+      - name: Setup Maven Action
+        uses: s4u/setup-maven-action@v1.13.0
+        with:
+          java-version: 8
+          maven-version: 3.9.1
+          checkout-token: ${{ github.token }}
+      - name: Set up SSL keys
+        run: |
+          sudo apt update
+          openssl s_client -showcerts -connect maven.java.net:443 < /dev/null 2> /dev/null | openssl x509 -outform PEM > maven_cert.pem
+          sudo keytool -import -trustcacerts -file maven_cert.pem -alias maven-snapshot -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -noprompt
+      - name: "DELTE ME: Test java version"
+        run: |
+          java -version
+          mvn --version
+      - name: Run Maven Tests
+        run: |
+          cd LendARead2-AWS/LendARead2/
+          mvn clean test

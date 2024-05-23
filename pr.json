@@ -1,0 +1,12 @@
+{
+  "pull_request": {
+    "title": "PATCH - Update README.md",
+    "head": {
+      "ref": "CI"
+    },
+    "base": {
+      "ref": "dev"
+    }
+  }
+}
+
