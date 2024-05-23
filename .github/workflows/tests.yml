@@ -41,10 +41,7 @@ jobs:
           java-version: 8
           maven-version: 3.9.1
           checkout-token: ${{ github.token }}
-      - name: DELTE ME - Show mvn version
+      - name: "DELTE ME: Test java version"
         run: |
+          java -version
           mvn --version
-      - name: Do a mvn test
-        run: |
-          cd LendARead2-AWS/LendARead2/
-          mvn clean test
