@@ -3,7 +3,7 @@ name: Deploy Architecture
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   terraform-init:
@@ -45,7 +45,7 @@ jobs:
       run: |
         cd LendARead2-AWS/terraform/main
         terraform init
-        terraform apply -auto-approve -var-file=sample.tfvars -lock=false
+        terraform apply -auto-approve -var-file=sample.tfvars
 
     - name: Output Terraform state
       run: |

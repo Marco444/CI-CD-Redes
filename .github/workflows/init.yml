@@ -22,8 +22,6 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-      with:
-        submodules: true  # Though not needed for subtree, it's harmless if there are no submodules
 
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
