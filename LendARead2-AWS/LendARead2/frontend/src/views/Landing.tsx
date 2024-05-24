@@ -80,7 +80,7 @@ export default function Landing(){
             </section>
             
 
-            <section className="content-section text-white text-center pb-5" id="services" style={{backgroundColor: '#D00'}}>
+            <section className="content-section text-white text-center pb-5" id="services" style={{backgroundColor: '#D0DCD0'}}>
                 <div className="container px-4 px-lg-5 pt-3">
                     <div className="content-section-heading">
                         <h2 className="my-5" style={{color: '#3e4450'}}>{t('landing.instructions.title')}</h2>
