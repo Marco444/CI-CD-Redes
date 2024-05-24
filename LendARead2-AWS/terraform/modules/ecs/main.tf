@@ -76,7 +76,7 @@ resource "aws_ecs_service" "lendaread_service" {
 
 resource "null_resource" "update_ecs_service" {
   depends_on = [
-    null_resource.docker_image
+    var.docker_image
   ]
 
   provisioner "local-exec" {

@@ -3,3 +3,8 @@ output "repository_url" {
   description = "ECR repository URL"
 }
 
+output "docker_image" {
+  value       = null_resource.docker_image
+  description = "resource to trigger new re-deployment"
+}
+

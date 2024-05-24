@@ -3,6 +3,11 @@ variable "cluster_name" {
   description = "Name of the ECS cluster"
 }
 
+variable "docker_image" {
+  type        = string
+  description = "Docker image null resource to force service re-deploy"
+}
+
 variable "execution_role_arn" {
   description = "ARN of the IAM role for ECS task execution"
   type        = string
@@ -12,7 +17,7 @@ variable "task_role_arn" {
   description = "ARN of the IAM role for ECS tasks"
   type        = string
 }
- 
+
 variable "task_family" {
   type        = string
   description = "Family of the ECS task definition"
@@ -64,11 +69,12 @@ variable "tg_arn" {
 }
 
 variable "cpu_architecture" {
-  type = string
+  type        = string
   description = "Type of architecture the task will run (depend on which architecture is built)"
 }
 
 variable "ecs_log_group" {
-  type = string
+  type        = string
   description = "Cloudwatch log group"
 }
+
