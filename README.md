@@ -17,6 +17,17 @@ The LendARead architecture is deployed through terraform as part of a 3-tier arc
 
 ![Cloud Diagram](LendARead2-AWS/cloud.png)
 
+## CI/CD Setup
+
+To begin the pipeline one should first initialize the s3 bucket and dynamo table to hold both the terraform state as well as a lock to prevent incosistencies in the terraform state stored in the s3. To initialize the architecture one should push the tag `init`
+
+```bash
+git tag init                                                                                          
+git push origin init
+```
+
+This will trigger a Github action that will create the s3 bucket and dynamo table. After this is complete one can push to the main branch, this will run the `terraform init` and `terraform apply` using the state defined in the last step. Whatever changes are done to the application, or the infraestructure itself, will be updated in the deployment. The key here is that because the state is stored in a s3 only the changes to the current architecture will be made, if nothing of the infraestructure changed then only the docker image will be updated. 
+
 ## CI/CD Requirements
 
 Create a pipeline that includes the following elements:
