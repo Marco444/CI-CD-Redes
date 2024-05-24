@@ -4,7 +4,7 @@ output "repository_url" {
 }
 
 output "docker_image" {
-  value       = null_resource.docker_image
+  value       = null_resource.docker_image.id
   description = "resource to trigger new re-deployment"
 }
 
