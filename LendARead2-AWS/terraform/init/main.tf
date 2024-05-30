@@ -35,7 +35,12 @@ resource "aws_dynamodb_table" "terraform_locks" {
 }
 
 
-module "ecr" {
-  source          = "../modules/ecr"
-  repository_name = var.repository_name
+resource "aws_ecr_repository" "lendaread_ecr" {
+  name                 = var.repository_name
+  image_tag_mutability = "MUTABLE"
+
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
 }
