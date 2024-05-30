@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+# on:
+#   workflow_run:
+#     workflows: ["Initialize Terraform Backend"]
+#     types:
+#       - completed
 jobs:
   terraform-init:
     runs-on: ubuntu-latest
@@ -40,13 +45,21 @@ jobs:
         sed -i "s|\${region}|$AWS_REGION|g" backend.tf
         sed -i "s|\${dynamodb_table}|$AWS_DYNAMODB_NAME|g" backend.tf
 
-    - name: Initialize Terraform backend resources
+    - name: Initialize Dev Enviroment
       run: |
-        cd LendARead2-AWS/terraform/main
+        cd LendARead2-AWS/terraform/dev
         terraform init
-        terraform apply -auto-approve -var-file=sample.tfvars
+        terraform apply -auto-approve
 
-    - name: Output Terraform state
+    - name: Initialize QA Enviroment
       run: |
-        cd LendARead2-AWS/terraform/main
-        terraform output
+        cd LendARead2-AWS/terraform/qa
+        terraform init
+        terraform apply -auto-approve
+
+
+    - name: Initialize Prod Enviroment
+      run: |
+        cd LendARead2-AWS/terraform/prod
+        terraform init
+        terraform apply -auto-approve
