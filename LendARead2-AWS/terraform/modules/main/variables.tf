@@ -1,3 +1,8 @@
+variable "ecr_repository_url" {
+  description = "URL of ECR repository"
+  type        = string
+}
+
 variable "env" {
   description = "Enviroment the architecture lives"
   type        = string

@@ -12,3 +12,9 @@ variable "dynamodb_table_name" {
   description = "The name of the DynamoDB table for state locking."
   type        = string
 }
+
+
+variable "repository_name" {
+  type        = string
+  description = "Name of the ECR repository"
+}

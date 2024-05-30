@@ -8,5 +8,11 @@ variable "rds_password" {
 
 variable "multi_az_rds" {
   description = "Boolean to determine RDS replication"
-  type = bool
+  type        = bool
+}
+
+
+variable "ecr_repository_url" {
+  description = "URL of ECR repository"
+  type        = string
 }

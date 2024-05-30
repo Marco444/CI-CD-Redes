@@ -33,3 +33,9 @@ resource "aws_dynamodb_table" "terraform_locks" {
     prevent_destroy = true
   }
 }
+
+
+module "ecr" {
+  source          = "../modules/ecr"
+  repository_name = var.ecr_name
+}

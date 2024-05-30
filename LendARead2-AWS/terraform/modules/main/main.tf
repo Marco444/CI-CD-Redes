@@ -8,14 +8,14 @@ provider "aws" {
 }
 
 
-module "ecr" {
-  source               = "../ecr"
-  aws_region           = var.aws_region
-  repository_name      = var.ecr_name
-  image_tag_mutability = var.ecr_mutability
-  branch               = var.branch_env
-  lb_url               = module.alb.alb_dns_name
-}
+# module "ecr" {
+#   source               = "../ecr"
+#   aws_region           = var.aws_region
+#   repository_name      = var.ecr_name
+#   image_tag_mutability = var.ecr_mutability
+#   branch               = var.branch_env
+#   lb_url               = module.alb.alb_dns_name
+# }
 
 module "ecs" {
   source             = "../ecs"
@@ -24,7 +24,7 @@ module "ecs" {
   aws_region         = var.aws_region
   subnets            = [module.vpc.subnet_private1, module.vpc.subnet_private2]
   security_groups    = [module.security_groups.ecs_task_security_group_id]
-  repository_url     = module.ecr.repository_url
+  repository_url     = var.ecr_repository_url
   lb_dns_name        = module.alb.alb_dns_name
   db_endpoint        = module.rds.db_endpoint
   db_username        = module.rds.db_username
