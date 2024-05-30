@@ -17,6 +17,7 @@ jobs:
       AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
       TF_VAR_aws_region: "us-east-1"
       TF_VAR_bucket_name: ${{ secrets.S3_TERRAFORM_STATE_NAME }}
+      TF_VAR_repository_name: "lendaread_ecr_region"
       TF_VAR_dynamodb_table_name: ${{ secrets.DYNAMODB_TERRAFORM_LOCK_NAME }}
 
     steps:
