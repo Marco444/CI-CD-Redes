@@ -9,7 +9,7 @@ provider "aws" {
 
 
 module "ecr" {
-  source               = "../modules/ecr"
+  source               = "../ecr"
   aws_region           = var.aws_region
   repository_name      = var.ecr_name
   image_tag_mutability = var.ecr_mutability
@@ -18,7 +18,7 @@ module "ecr" {
 }
 
 module "ecs" {
-  source             = "../modules/ecs"
+  source             = "../ecs"
   cluster_name       = var.cluster_name
   task_family        = var.task_family
   aws_region         = var.aws_region
@@ -38,7 +38,7 @@ module "ecs" {
 }
 
 module "alb" {
-  source            = "../modules/alb"
+  source            = "../alb"
   vpc_id            = module.vpc.vpc_id
   alb_sg            = module.security_groups.lb_security_group_id
   public_subnets    = [module.vpc.subnet_public1, module.vpc.subnet_public2]
@@ -48,7 +48,7 @@ module "alb" {
 }
 
 module "rds" {
-  source                 = "../modules/rds"
+  source                 = "../rds"
   instance_class         = var.rds_instance_class
   allocated_storage      = var.rds_allocated_storage
   engine                 = var.rds_engine
@@ -61,19 +61,19 @@ module "rds" {
 }
 
 module "security_groups" {
-  source = "../modules/sg"
+  source = "../sg"
   vpc_id = module.vpc.vpc_id
 }
 
 module "vpc" {
-  source              = "../modules/vpc"
+  source              = "../vpc"
   cidr_vpc            = var.vpc_cidr
   availability_zone_1 = format("%s%s", var.aws_region, "a")
   availability_zone_2 = format("%s%s", var.aws_region, "b")
 }
 
 module "cloudwatch" {
-  source       = "../modules/cloudwatch"
+  source       = "../cloudwatch"
   ecs_log_name = "/ecs/${var.task_family}"
 }
 

@@ -1,6 +1,6 @@
 
 module "main" {
-  source            = "./main"
+  source            = "../modules/main"
   role="LabRole"
   rds_password="adjnb989ad##"
   ecs_task_cpu_architecture = "X86_64"
