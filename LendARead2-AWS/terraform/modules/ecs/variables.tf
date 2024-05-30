@@ -3,10 +3,10 @@ variable "cluster_name" {
   description = "Name of the ECS cluster"
 }
 
-variable "docker_image" {
-  type        = string
-  description = "Docker image null resource to force service re-deploy"
-}
+# variable "docker_image" {
+#   type        = string
+#   description = "Docker image null resource to force service re-deploy"
+# }
 
 variable "execution_role_arn" {
   description = "ARN of the IAM role for ECS task execution"
