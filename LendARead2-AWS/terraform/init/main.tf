@@ -37,5 +37,5 @@ resource "aws_dynamodb_table" "terraform_locks" {
 
 module "ecr" {
   source          = "../modules/ecr"
-  repository_name = var.ecr_name
+  repository_name = var.repository_name
 }
