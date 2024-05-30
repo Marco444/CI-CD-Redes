@@ -38,18 +38,33 @@ jobs:
       with:
         terraform_version: 1.0.0
 
-    - name: Create Terraform backend configuration
+    - name: Create Terraform backend configuration Dev
       run: |
-        cd LendARead2-AWS/terraform/modules/main
+        cd LendARead2-AWS/terraform/dev
+        sed "s|\${bucket}|$AWS_BUCKET_NAME_TERRAFORM_STATE|g" backend.tpl > backend.tf
+        sed -i "s|\${region}|$AWS_REGION|g" backend.tf
+        sed -i "s|\${dynamodb_table}|$AWS_DYNAMODB_NAME|g" backend.tf
+
+    - name: Create Terraform backend configuration QA
+      run: |
+        cd LendARead2-AWS/terraform/qa
+        sed "s|\${bucket}|$AWS_BUCKET_NAME_TERRAFORM_STATE|g" backend.tpl > backend.tf
+        sed -i "s|\${region}|$AWS_REGION|g" backend.tf
+        sed -i "s|\${dynamodb_table}|$AWS_DYNAMODB_NAME|g" backend.tf
+
+
+    - name: Create Terraform backend configuration Prod
+      run: |
+        cd LendARead2-AWS/terraform/prod
         sed "s|\${bucket}|$AWS_BUCKET_NAME_TERRAFORM_STATE|g" backend.tpl > backend.tf
         sed -i "s|\${region}|$AWS_REGION|g" backend.tf
         sed -i "s|\${dynamodb_table}|$AWS_DYNAMODB_NAME|g" backend.tf
 
     - name: Initialize Dev Enviroment
       run: |
-        cd LendARead2-AWS/terraform/dev
+        cd LendARead2-AWS/terraform/modules/main
         terraform init
-        terraform apply -auto-approve
+        terraform apply -auto-approve 
 
     - name: Initialize QA Enviroment
       run: |
