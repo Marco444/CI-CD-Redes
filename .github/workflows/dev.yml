@@ -63,9 +63,10 @@ jobs:
     - name: Initialize Dev Enviroment
       run: |
         cd LendARead2-AWS/terraform/dev
+        echo "Current directory contents:"
         ls
         terraform init
-        terraform apply -auto-approve -var-file=dev.tfvars
+        terraform apply -auto-approve -var-file="dev.tfvars"
 
     - name: Initialize QA Enviroment
       run: |
