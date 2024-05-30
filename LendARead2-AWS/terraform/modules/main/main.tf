@@ -45,6 +45,7 @@ module "alb" {
   alb_name          = var.alb_name
   target_group_name = var.alb_tg
   health_check_path = var.alb_health_path
+  env               = var.env
 }
 
 module "rds" {
@@ -75,6 +76,7 @@ module "vpc" {
 module "cloudwatch" {
   source       = "../cloudwatch"
   ecs_log_name = "/ecs/${var.task_family}"
+  env          = var.env
 }
 
 ## AWS Learner Lab does not allow to use grafana

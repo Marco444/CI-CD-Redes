@@ -7,4 +7,5 @@ module "main" {
   multi_az_rds              = var.multi_az_rds
   role                      = var.role
   rds_password              = var.rds_password
+  env                       = "qa"
 }

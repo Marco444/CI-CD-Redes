@@ -10,7 +10,7 @@ resource "aws_lb" "lendaread_alb" {
 
 
 resource "aws_lb_target_group" "lendaread_tg" {
-  name        = var.target_group_name
+  name        = format("%s-%s", var.target_group_name, var.env)
   port        = 8080
   protocol    = "HTTP"
   vpc_id      = var.vpc_id

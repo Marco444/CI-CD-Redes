@@ -1,3 +1,7 @@
+variable "env" {
+  description = "Enviroment the alb lives"
+  type        = string
+}
 variable "vpc_id" {
   type        = string
   description = "ID of the VPC where the load balancer and security groups are to be created."

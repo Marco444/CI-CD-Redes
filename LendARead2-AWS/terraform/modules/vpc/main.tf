@@ -21,8 +21,8 @@ resource "aws_internet_gateway" "lendaread_gw" {
 #############################################
 resource "aws_subnet" "subnet_public1" {
   vpc_id            = aws_vpc.lendaread_vpc.id
-  cidr_block        =  var.cidr_public_1
-  availability_zone =  var.availability_zone_1
+  cidr_block        = cidrsubnet(var.cidr_vpc, 8, 1)
+  availability_zone = var.availability_zone_1
 
   tags = {
     Name = "Public Subnet 1"
@@ -31,7 +31,7 @@ resource "aws_subnet" "subnet_public1" {
 
 resource "aws_subnet" "subnet_public2" {
   vpc_id            = aws_vpc.lendaread_vpc.id
-  cidr_block        = var.cidr_public_2
+  cidr_block        = cidrsubnet(var.cidr_vpc, 8, 2)
   availability_zone = var.availability_zone_2
 
   tags = {
@@ -70,7 +70,7 @@ resource "aws_route_table_association" "public_rta2" {
 
 resource "aws_subnet" "subnet_private1" {
   vpc_id            = aws_vpc.lendaread_vpc.id
-  cidr_block        = var.cidr_private_1
+  cidr_block        = cidrsubnet(var.cidr_vpc, 8, 3)
   availability_zone = var.availability_zone_1
 
   tags = {
@@ -80,7 +80,7 @@ resource "aws_subnet" "subnet_private1" {
 
 resource "aws_subnet" "subnet_private2" {
   vpc_id            = aws_vpc.lendaread_vpc.id
-  cidr_block        = var.cidr_private_2
+  cidr_block        = cidrsubnet(var.cidr_vpc, 8, 4)
   availability_zone = var.availability_zone_2
 
   tags = {
@@ -90,16 +90,15 @@ resource "aws_subnet" "subnet_private2" {
 
 
 # Elastic IPs for NAT Gateways
-resource "aws_eip" "nat_eip1" {
-}
+resource "aws_eip" "nat_eip1" {}
 
-resource "aws_eip" "nat_eip2" {
-}
+resource "aws_eip" "nat_eip2" {}
 
 # NAT Gateways
 resource "aws_nat_gateway" "nat_gateway1" {
   allocation_id = aws_eip.nat_eip1.id
   subnet_id     = aws_subnet.subnet_public1.id
+
   tags = {
     Name = "NAT Gateway 1"
   }
@@ -108,6 +107,7 @@ resource "aws_nat_gateway" "nat_gateway1" {
 resource "aws_nat_gateway" "nat_gateway2" {
   allocation_id = aws_eip.nat_eip2.id
   subnet_id     = aws_subnet.subnet_public2.id
+
   tags = {
     Name = "NAT Gateway 2"
   }
@@ -157,7 +157,7 @@ resource "aws_route_table_association" "private_rta2" {
 
 resource "aws_subnet" "subnet_db1" {
   vpc_id            = aws_vpc.lendaread_vpc.id
-  cidr_block        = var.cidr_db_1
+  cidr_block        = cidrsubnet(var.cidr_vpc, 8, 5)
   availability_zone = var.availability_zone_1
 
   tags = {
@@ -167,7 +167,7 @@ resource "aws_subnet" "subnet_db1" {
 
 resource "aws_subnet" "subnet_db2" {
   vpc_id            = aws_vpc.lendaread_vpc.id
-  cidr_block        = var.cidr_db_2
+  cidr_block        = cidrsubnet(var.cidr_vpc, 8, 6)
   availability_zone = var.availability_zone_2
 
   tags = {
@@ -192,6 +192,7 @@ resource "aws_route_table" "subnet_db2_route_table" {
     Name = "Private Database Route Table 2"
   }
 }
+
 resource "aws_route_table_association" "db_rta1" {
   subnet_id      = aws_subnet.subnet_db1.id
   route_table_id = aws_route_table.subnet_db1_route_table.id

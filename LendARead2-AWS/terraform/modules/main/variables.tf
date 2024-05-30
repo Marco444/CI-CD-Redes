@@ -1,6 +1,10 @@
+variable "env" {
+  description = "Enviroment the architecture lives"
+  type        = string
+}
 variable "vpc_cidr" {
   description = "CIDR for enviroment"
-  type = string
+  type        = string
 }
 
 variable "aws_region" {
