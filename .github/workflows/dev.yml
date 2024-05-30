@@ -62,7 +62,7 @@ jobs:
 
     - name: Initialize Dev Enviroment
       run: |
-        cd LendARead2-AWS/terraform/modules/main
+        cd LendARead2-AWS/terraform/dev
         terraform init
         terraform apply -auto-approve -var-file=dev.tfvars
 

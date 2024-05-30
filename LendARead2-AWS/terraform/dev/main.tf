@@ -1,4 +1,3 @@
-
 module "main" {
   source            = "../modules/main"
   ecs_task_cpu_architecture = "X86_64"
