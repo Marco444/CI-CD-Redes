@@ -67,6 +67,7 @@ module "security_groups" {
 
 module "vpc" {
   source              = "../modules/vpc"
+  cidr_vpc            = var.vpc_cidr
   availability_zone_1 = format("%s%s", var.aws_region, "a")
   availability_zone_2 = format("%s%s", var.aws_region, "b")
 }
