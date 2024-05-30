@@ -60,28 +60,21 @@ jobs:
         sed -i "s|\${region}|$AWS_REGION|g" backend.tf
         sed -i "s|\${dynamodb_table}|$AWS_DYNAMODB_NAME|g" backend.tf
 
-    - name: Initialize Dev Environment
+    - name: Initialize Dev Enviroment
       run: |
-        set -x
         cd LendARead2-AWS/terraform/dev
-        echo "Current directory contents:"
-        ls
-        if [ ! -f dev.tfvars ]; then
-          echo "Error: dev.tfvars file not found!"
-          exit 1
-        fi
         terraform init
-        terraform apply -auto-approve -var-file=dev.tfvars
+        terraform apply -auto-approve -var-file=dev.tfvars -lock=false
 
     - name: Initialize QA Enviroment
       run: |
         cd LendARead2-AWS/terraform/qa
         terraform init
-        terraform apply -auto-approve -var-file=qa.tfvars 
+        terraform apply -auto-approve -var-file=qa.tfvars -lock=false
 
 
     - name: Initialize Prod Enviroment
       run: |
         cd LendARead2-AWS/terraform/prod
         terraform init
-        terraform apply -auto-approve -var-fil=prod.tfvars  
+        terraform apply -auto-approve -var-fil=prod.tfvars  -lock=false
