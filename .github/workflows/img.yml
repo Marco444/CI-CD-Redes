@@ -3,7 +3,7 @@ name: Deploy Image and Force ECS Deploy
 on:
   push:
     branches:
-      - main
+      - CI
 
 jobs:
   build-deploy-image:
