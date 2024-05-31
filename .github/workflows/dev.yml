@@ -24,7 +24,6 @@ jobs:
       TF_VAR_aws_region: "us-east-1"
       TF_VAR_role: "LabRole"
       TF_VAR_ecs_task_cpu_architecture: "ARM_64"
-      TF_VAR_ecr_repository_url: "lendaread_ecr_region"
       AWS_REGION: "us-east-1"
 
       AWS_BUCKET_NAME_TERRAFORM_STATE: ${{ secrets.S3_TERRAFORM_STATE_NAME }}
@@ -38,6 +37,21 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 1.0.0
+
+
+    - name: Install AWS CLI
+      run: |
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip awscliv2.zip
+        sudo ./aws/install
+
+    - name: Retrieve ECR Repository URL
+      id: state
+      run: |
+        aws s3 cp s3://${AWS_BUCKET_NAME_TERRAFORM_STATE}/dev/terraform.tfstate terraform.tfstate
+        TF_VAR_ecr_repository_url=$(jq -r '.resources[] | select(.type == "aws_ecr_repository") | .instances[0].attributes.repository_url' terraform.tfstate)
+        echo "TF_VAR_ecr_repository_url=${TF_VAR_ecr_repository_url}" >> $GITHUB_ENV
+
 
     - name: Create Terraform backend configuration Dev
       run: |
@@ -65,17 +79,17 @@ jobs:
       run: |
         cd LendARead2-AWS/terraform/dev
         terraform init
-        terraform apply -auto-approve -var-file=dev.tfvars -lock=false
+        terraform apply -auto-approve -var-file=dev.tfvars 
 
     - name: Initialize QA Enviroment
       run: |
         cd LendARead2-AWS/terraform/qa
         terraform init
-        terraform apply -auto-approve -var-file=qa.tfvars -lock=false
+        terraform apply -auto-approve -var-file=qa.tfvars 
 
 
     - name: Initialize Prod Enviroment
       run: |
         cd LendARead2-AWS/terraform/prod
         terraform init
-        terraform apply -auto-approve -var-file=prod.tfvars  -lock=false
+        terraform apply -auto-approve -var-file=prod.tfvars  
