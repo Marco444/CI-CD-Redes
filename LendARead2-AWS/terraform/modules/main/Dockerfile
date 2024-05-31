@@ -1,7 +1,6 @@
 # Use a base image with JDK installed, required for Tomcat and Maven
 FROM openjdk:8
 
-ARG LB_URL
 # Set environment variables for the application
 ENV VITE_APP_BASE_PATH='/webapp' \
     VITE_APP_BASE_URL='' \
