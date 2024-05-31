@@ -1,4 +1,4 @@
-name: Deploy Image and Force ECS deploy it
+name: Deploy Image and Force ECS Deploy
 
 on:
   push:
@@ -17,21 +17,34 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
       AWS_REGION: "us-east-1"
-
       AWS_BUCKET_NAME_TERRAFORM_STATE: ${{ secrets.S3_TERRAFORM_STATE_NAME }}
       AWS_ECR_URL: "516697223383.dkr.ecr.us-east-1.amazonaws.com"
       VERSION: "latest"
+      ENVIROMENT: "dev"
       AWS_DYNAMODB_NAME: ${{ secrets.DYNAMODB_TERRAFORM_LOCK_NAME }}
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-
-    - name: Create and Deploy Image to ECR
-      run: |
+      - name: Create and Deploy Image to ECR
+        run: |
           cd LendARead2-AWS/terraform/modules/main
           aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${AWS_ECR_URL}
           docker build --build-arg BRANCH_NAME=${BRANCH} -t ${AWS_ECR_URL}/lendaread_ecr_region:${VERSION} .
           docker push ${AWS_ECR_URL}/lendaread_ecr_region:${VERSION}
+
+      - name: Retrieve ECS Cluster and Service Names
+        id: state
+        run: |
+          aws s3 cp s3://${AWS_BUCKET_NAME_TERRAFORM_STATE}/${ENVIROMENT}/terraform.tfstate terraform.tfstate
+          ECS_CLUSTER_NAME=$(jq -r '.resources[] | select(.type == "aws_ecs_cluster") | .instances[0].attributes.name' terraform.tfstate)
+          ECS_SERVICE_NAME=$(jq -r '.resources[] | select(.type == "aws_ecs_service") | .instances[0].attributes.name' terraform.tfstate)
+          echo "ECS_CLUSTER_NAME=${ECS_CLUSTER_NAME}" >> $GITHUB_ENV
+          echo "ECS_SERVICE_NAME=${ECS_SERVICE_NAME}" >> $GITHUB_ENV
+
+      - name: Update ECS Service
+        run: |
+          aws ecs update-service --cluster ${ECS_CLUSTER_NAME} --service ${ECS_SERVICE_NAME} --force-new-deployment
+
 
