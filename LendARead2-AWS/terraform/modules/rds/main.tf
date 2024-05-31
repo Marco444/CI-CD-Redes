@@ -1,10 +1,10 @@
 resource "aws_db_subnet_group" "my_db_subnet_group" {
-  name       = "my-db-subnet-group"
+  name       = format("%s-%s", "db_subnet_group", var.env)
   subnet_ids = var.subnet_ids
 }
 
 resource "aws_db_instance" "lendaread_db" {
-  identifier             = "db-instance"
+  identifier             = format("%s-%s", "db-instance", var.env)
   instance_class         = var.instance_class
   allocated_storage      = var.allocated_storage
   engine                 = var.engine

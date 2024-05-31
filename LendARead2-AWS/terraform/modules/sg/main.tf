@@ -1,5 +1,5 @@
 resource "aws_security_group" "lendaread_lb_sg" {
-  name        = "lb-security-group"
+  name        = format("%s-%s", "lb-security-group", var.env)
   description = "Security group for Load Balancer"
   vpc_id      = var.vpc_id
 
@@ -24,7 +24,7 @@ resource "aws_security_group" "lendaread_lb_sg" {
 }
 
 resource "aws_security_group" "lendaread_api_task_sg" {
-  name        = "lendaread_api_sg"
+  name        = format("%s-%s", "lendaread_api_sg", var.env)
   description = "Security group for ECS tasks to allow traffic on port 8080"
   vpc_id      = var.vpc_id
 
@@ -49,7 +49,7 @@ resource "aws_security_group" "lendaread_api_task_sg" {
 }
 
 resource "aws_security_group" "rds_sg" {
-  name        = "rds-security-group"
+  name        = format("%s-%s", "rds-security-group", var.env)
   description = "Security group for RDS instance to allow access from ECS tasks"
   vpc_id      = var.vpc_id
 

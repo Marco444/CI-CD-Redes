@@ -1,3 +1,8 @@
+
+variable "env" {
+  description = "Enviroment type"
+  type        = string
+}
 variable "cluster_name" {
   type        = string
   description = "Name of the ECS cluster"

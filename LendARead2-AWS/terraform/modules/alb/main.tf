@@ -1,5 +1,5 @@
 resource "aws_lb" "lendaread_alb" {
-  name                       = var.alb_name
+  name                       = format("%s-%s", var.alb_name, var.env)
   internal                   = false
   load_balancer_type         = "application"
   security_groups            = [var.alb_sg]

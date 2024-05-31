@@ -1,11 +1,11 @@
 
 
 resource "aws_ecs_cluster" "lendaread_cluster" {
-  name = var.cluster_name
+  name = format("%s-%s", var.cluster_name, var.env)
 }
 
 resource "aws_ecs_task_definition" "lendaread_api_task" {
-  family                   = var.task_family
+  family                   = format("%s-%s", var.task_family, var.env)
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "1024"
@@ -51,7 +51,7 @@ resource "aws_ecs_task_definition" "lendaread_api_task" {
 }
 
 resource "aws_ecs_service" "lendaread_service" {
-  name            = "lendaread_service"
+  name            = format("%s-%s", "lendaread_service", var.env)
   cluster         = aws_ecs_cluster.lendaread_cluster.id
   task_definition = aws_ecs_task_definition.lendaread_api_task.arn
   desired_count   = 1
