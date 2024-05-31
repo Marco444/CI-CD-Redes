@@ -1,0 +1,141 @@
+name: Build and Deploy
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+jobs:
+  extract-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      TAG: ${{ steps.tag.outputs.TAG }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Lift to env
+        id: raw-tag
+        run: |
+          echo "RAW_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+      - name: Parse tag
+        id: tag
+        run: |
+          PARSED=$(echo $RAW_TAG | sed 's/^v\(.*\)/\1/')
+          echo "TAG=$PARSED" >> $GITHUB_OUTPUT
+  run-tests:
+    runs-on: ubuntu-latest
+    outputs:
+      TEST_RESULT: ${{ steps.test.outputs.TEST_RESULT }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Setup Maven Action
+        uses: s4u/setup-maven-action@v1.13.0
+        with:
+          java-version: 8
+          maven-version: 3.9.1
+          checkout-token: ${{ github.token }}
+      - name: Set up SSL keys
+        run: |
+          sudo apt update
+          openssl s_client -showcerts -connect maven.java.net:443 < /dev/null 2> /dev/null | openssl x509 -outform PEM > maven_cert.pem
+          sudo keytool -import -trustcacerts -file maven_cert.pem -alias maven-snapshot -keystore $JAVA_HOME/jre/lib/security/cacerts -storepass changeit -noprompt
+      - name: Run Maven Tests
+        id: test
+        run: |
+          cd LendARead2-AWS/LendARead2/
+          mvn clean test || OUTPUT=$? 
+          echo "TEST_RESULT=${OUTPUT:-0}" >> $GITHUB_OUTPUT
+
+  delete-tag-if-tests-failed:
+    runs-on: ubuntu-latest
+    needs: 
+      - run-tests
+      - extract-tag
+    if: needs.run-tests.outputs.TEST_RESULT != '0'
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Remove tag
+        run: |
+          TAG_TO_RMV=v${{ needs.extract-tag.outputs.TAG }}
+          echo "TAG_TO_RMV=$TAG_TO_RMV" >> $GITHUB_ENV
+      - uses: dev-drprasad/delete-tag-and-release@v1.1
+        with:
+          tag_name: ${{ env.TAG_TO_RMV }}
+          delete_release: true 
+          github_token: ${{ secrets.GH_TOKEN }} 
+
+  build-image:
+    runs-on: ubuntu-latest
+    needs:
+      - extract-tag
+      - run-tests
+    if: needs.run-tests.outputs.TEST_RESULT == '0'
+    env:
+      BRANCH: "main" 
+      VERSION: ${{ needs.extract-tag.outputs.TAG }}
+      AWS_DEFAULT_REGION: "us-east-1"
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+      AWS_BUCKET_NAME_TERRAFORM_STATE: ${{ secrets.S3_TERRAFORM_STATE_NAME }}
+      AWS_ECR_URL: "516697223383.dkr.ecr.us-east-1.amazonaws.com"
+      AWS_DYNAMODB_NAME: ${{ secrets.DYNAMODB_TERRAFORM_LOCK_NAME }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create and Deploy Image to ECR
+        run: |
+          cd LendARead2-AWS/terraform/modules/main
+          aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ECR_URL}
+          docker build --build-arg BRANCH_NAME=${BRANCH} -t ${AWS_ECR_URL}/lendaread_ecr_region:${VERSION} .
+          docker push ${AWS_ECR_URL}/lendaread_ecr_region:${VERSION}
+  
+  deploy-dev:
+    runs-on: ubuntu-latest
+    needs: 
+      - extract-tag
+      - build-image
+    env:
+      BRANCH: "main" 
+      ENVIRONMENT: "dev"
+      VERSION: ${{ needs.extract-tag.outputs.TAG }}
+      AWS_DEFAULT_REGION: "us-east-1"
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+      AWS_BUCKET_NAME_TERRAFORM_STATE: ${{ secrets.S3_TERRAFORM_STATE_NAME }}
+      AWS_ECR_URL: "516697223383.dkr.ecr.us-east-1.amazonaws.com"
+      AWS_DYNAMODB_NAME: ${{ secrets.DYNAMODB_TERRAFORM_LOCK_NAME }}
+    steps:
+      - name: Retrieve ECS Cluster and Service Names
+        id: state
+        run: |
+          aws s3 cp s3://${AWS_BUCKET_NAME_TERRAFORM_STATE}/${ENVIRONMENT}/terraform.tfstate terraform.tfstate
+          ECS_CLUSTER_NAME=$(jq -r '.resources[] | select(.type == "aws_ecs_cluster") | .instances[0].attributes.name' terraform.tfstate)
+          ECS_SERVICE_NAME=$(jq -r '.resources[] | select(.type == "aws_ecs_service") | .instances[0].attributes.name' terraform.tfstate)
+          TASK_DEFINITION_ARN=$(jq -r '.resources[] | select(.type == "aws_ecs_task_definition") | .instances[0].attributes.arn' terraform.tfstate)
+          echo "ECS_CLUSTER_NAME=${ECS_CLUSTER_NAME}" >> $GITHUB_ENV
+          echo "ECS_SERVICE_NAME=${ECS_SERVICE_NAME}" >> $GITHUB_ENV
+          echo "TASK_DEFINITION_ARN=${TASK_DEFINITION_ARN}" >> $GITHUB_ENV
+
+      - name: Describe task definition
+        id: describe-task-def
+        run: |
+          TASK_FAMILY=$(echo $TASK_DEFINITION_ARN | cut -d '/' -f 2 | cut -d ':' -f 1)
+          echo "TASK_FAMILY=${TASK_FAMILY}" >> $GITHUB_ENV
+          aws ecs describe-task-definition --task-definition ${TASK_DEFINITION_ARN} > current-task-def.json
+
+      - name: Register new task definition revision
+        id: new-task-def
+        run: |
+          NEW_TASK_DEF=$(jq --arg IMAGE "${AWS_ECR_URL}/lendaread_ecr_region:${VERSION}" '.taskDefinition | .containerDefinitions[0].image = $IMAGE' current-task-def.json)
+          NEW_TASK_DEF=$(echo $NEW_TASK_DEF | jq 'del(.taskDefinitionArn, .revision, .status, .registeredAt, .registeredBy, .compatibilities, .requiresAttributes)')
+          echo "${NEW_TASK_DEF}" > new-task-def.json
+          NEW_TASK_DEF_ARN=$(aws ecs register-task-definition --cli-input-json file://new-task-def.json --query 'taskDefinition.taskDefinitionArn' --output text)
+          echo "NEW_TASK_DEF_ARN=${NEW_TASK_DEF_ARN}" >> $GITHUB_ENV
+
+      - name: Update ECS Service
+        run: |
+          aws ecs update-service --cluster ${ECS_CLUSTER_NAME} --service ${ECS_SERVICE_NAME} --task-definition ${NEW_TASK_DEF_ARN} --force-new-deployment
