@@ -78,4 +78,4 @@ jobs:
       run: |
         cd LendARead2-AWS/terraform/prod
         terraform init
-        terraform apply -auto-approve -var-fil=prod.tfvars  -lock=false
+        terraform apply -auto-approve -var-file=prod.tfvars  -lock=false
