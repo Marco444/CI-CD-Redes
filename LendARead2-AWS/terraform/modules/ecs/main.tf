@@ -73,15 +73,3 @@ resource "aws_ecs_service" "lendaread_service" {
     aws_ecs_task_definition.lendaread_api_task
   ]
 }
-
-# resource "null_resource" "update_ecs_service" {
-#   depends_on = [
-#     var.docker_image
-#   ]
-#
-#   provisioner "local-exec" {
-#     command = <<EOT
-#       aws ecs update-service --cluster ${aws_ecs_cluster.lendaread_cluster.name} --service lendaread_service --force-new-deployment
-#     EOT
-#   }
-# }
