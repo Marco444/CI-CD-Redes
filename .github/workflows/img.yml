@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-deploy-update-ecs:
+  terraform-init:
     runs-on: ubuntu-latest
     environment: aws
     
@@ -25,27 +25,36 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Install jq
+        run: sudo apt-get install -y jq
 
-
-      - name: Retrieve ECS Cluster and Service Names
+      - name: Retrieve ECR Repository URL, ECS Cluster, and Service Names
+        id: retrieve_info
         run: |
           aws s3 cp s3://${AWS_BUCKET_NAME_TERRAFORM_STATE}/${ENVIRONMENT}/terraform.tfstate terraform.tfstate
-          ECS_CLUSTER_NAME=$(jq -r '.resources[] | select(.type == "aws_ecs_cluster") | .instances[0].attributes.name' terraform.tfstate)
           ECR_URL=$(jq -r '.resources[] | select(.type == "aws_ecr_repository") | .instances[0].attributes.repository_url' terraform.tfstate)
+          ECS_CLUSTER_NAME=$(jq -r '.resources[] | select(.type == "aws_ecs_cluster") | .instances[0].attributes.name' terraform.tfstate)
           ECS_SERVICE_NAME=$(jq -r '.resources[] | select(.type == "aws_ecs_service") | .instances[0].attributes.name' terraform.tfstate)
           echo "ECR_URL=${ECR_URL}" >> $GITHUB_ENV
           echo "ECS_CLUSTER_NAME=${ECS_CLUSTER_NAME}" >> $GITHUB_ENV
           echo "ECS_SERVICE_NAME=${ECS_SERVICE_NAME}" >> $GITHUB_ENV
 
+      - name: Debug ECR URL
+        run: echo "ECR_URL is $ECR_URL"
+
       - name: Create and Deploy Image to ECR
         run: |
+          echo "ECR_URL is $ECR_URL"
           cd LendARead2-AWS/terraform/modules/main
           aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${ECR_URL}
           docker build --build-arg BRANCH_NAME=${BRANCH} -t ${ECR_URL}:${VERSION} .
           docker push ${ECR_URL}:${VERSION}
-
+        env:
+          ECR_URL: ${{ env.ECR_URL }}
 
       - name: Update ECS Service
         run: |
           aws ecs update-service --cluster ${ECS_CLUSTER_NAME} --service ${ECS_SERVICE_NAME} --force-new-deployment
-
+        env:
+          ECS_CLUSTER_NAME: ${{ env.ECS_CLUSTER_NAME }}
+          ECS_SERVICE_NAME: ${{ env.ECS_SERVICE_NAME }}
