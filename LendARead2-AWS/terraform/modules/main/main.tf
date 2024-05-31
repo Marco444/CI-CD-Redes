@@ -34,6 +34,7 @@ module "ecs" {
   task_role_arn      = data.aws_iam_role.lab_role.arn
   cpu_architecture   = var.ecs_task_cpu_architecture
   ecs_log_group      = module.cloudwatch.ecs_log_group
+  env                = var.env
 }
 
 module "alb" {
@@ -58,11 +59,13 @@ module "rds" {
   subnet_ids             = [module.vpc.subnet_db1, module.vpc.subnet_db2]
   vpc_security_group_ids = [module.security_groups.rds_security_group_id]
   multi_az_rds           = var.multi_az_rds
+  env                    = var.env
 }
 
 module "security_groups" {
   source = "../sg"
   vpc_id = module.vpc.vpc_id
+  env    = var.env
 }
 
 module "vpc" {
@@ -77,12 +80,4 @@ module "cloudwatch" {
   ecs_log_name = "/ecs/${var.task_family}"
   env          = var.env
 }
-
-## AWS Learner Lab does not allow to use grafana
-#module "grafana" {
-#  source = "./modules/grafana"
-# aws_region             =  var.aws_region
-#  grafana_workspace_name = var.grafana_name
-#  role_arn = data.aws_iam_role.lab_role.arn
-#}
 
