@@ -1,3 +1,8 @@
+
+variable "env" {
+  description = "Enviroment type"
+  type        = string
+}
 variable "instance_class" {
   description = "The instance type of the RDS instance."
   type        = string
@@ -41,5 +46,6 @@ variable "vpc_security_group_ids" {
 
 variable "multi_az_rds" {
   description = "Boolean to mark whether multiple AZ RDS is configured"
-  type = bool
+  type        = bool
 }
+
