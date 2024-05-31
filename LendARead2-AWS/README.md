@@ -25,6 +25,7 @@ Now we need to create the S3 bucket and a DynamoDB to hold the terraform state l
 Then, apply the changes (make sure to set the AWS credentials beforehand). Also sample.tfvars holds the sample variables needed (this would change for dev/prod)
 
 ```bash
+
 terraform apply -auto-approve -var-file=sample.tfvars 
 ```
 
