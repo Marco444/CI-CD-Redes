@@ -60,7 +60,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "✅ Test passed for tag ${ GITHUB_REF#refs/tags/ }",
+                    "text": "✅ Test passed for tag ${ GITHUB_REF#refs/tags/ }"
                   }
                 }
               ]
@@ -114,7 +114,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": " ❌ Tests had errors for tag ${ GITHUB_REF#refs/tags/ }. Tag will be deleted, please check logs.",
+                    "text": " ❌ Tests had errors for tag ${ GITHUB_REF#refs/tags/ }. Tag will be deleted, please check logs."
                   }
                 }
               ]
@@ -175,7 +175,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": " 👷 Image built and pushed successfully tag: ${{ needs.extract-tag.outputs.TAG }}. Approval for development environment required.",
+                    "text": " 👷 Image built and pushed successfully tag: ${{ needs.extract-tag.outputs.TAG }}. Approval for development environment required."
                   }
                 }
               ]
@@ -246,7 +246,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": " 🚀 Development environment was deployed! Authorization for QA environment is required. tag: ${{ needs.extract-tag.outputs.TAG }}.",
+                    "text": " 🚀 Development environment was deployed! Authorization for QA environment is required. tag: ${{ needs.extract-tag.outputs.TAG }}."
                   }
                 }
               ]
@@ -318,7 +318,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": " 🚀 QA environment was deployed! Authorization for production environment is required. tag: ${{ needs.extract-tag.outputs.TAG }}.",
+                    "text": " 🚀 QA environment was deployed! Authorization for production environment is required. tag: ${{ needs.extract-tag.outputs.TAG }}."
                   }
                 }
               ]
@@ -390,7 +390,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": " 🚀 Production environment was deployed! Please pray 🔯✝️🛐. tag: ${{ needs.extract-tag.outputs.TAG }}.",
+                    "text": " 🚀 Production environment was deployed! Please pray 🔯✝️🛐. tag: ${{ needs.extract-tag.outputs.TAG }}."
                   }
                 }
               ]
