@@ -39,14 +39,6 @@ jobs:
         terraform_version: 1.0.0
 
 
-    - name: Retrieve ECR Repository URL
-      id: state
-      run: |
-        aws s3 cp s3://${AWS_BUCKET_NAME_TERRAFORM_STATE}/dev/terraform.tfstate terraform.tfstate
-        TF_VAR_ecr_repository_url=$(jq -r '.resources[] | select(.type == "aws_ecr_repository") | .instances[0].attributes.repository_url' terraform.tfstate)
-        echo "TF_VAR_ecr_repository_url=${TF_VAR_ecr_repository_url}" >> $GITHUB_ENV
-
-
     - name: Create Terraform backend configuration Dev
       run: |
         cd LendARead2-AWS/terraform/dev
