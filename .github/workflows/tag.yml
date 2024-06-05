@@ -45,6 +45,42 @@ jobs:
           cd LendARead2-AWS/LendARead2/
           mvn clean test || OUTPUT=$? 
           echo "TEST_RESULT=${OUTPUT:-0}" >> $GITHUB_OUTPUT
+      
+      - name: Send slack if success
+        if: ${{ steps.test.outputs.TEST_RESULT == '0' }}
+        id: slack
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          # For posting a rich message using Block Kit
+          payload: |
+            {
+              "text": "✅ Test passed for tag ${ GITHUB_REF#refs/tags/ }",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "✅ Test passed for tag ${ GITHUB_REF#refs/tags/ }",
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+    
+      - name: Send Email if success
+        if: ${{ steps.test.outputs.TEST_RESULT == '0' }}  
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: Tests passed for tag ${ GITHUB_REF#refs/tags/ }
+          body: A new tag was pushed and maven test were successful.
+          to: mippolito@itba.edu.ar
+          from: ${{ secrets.SMTP_USERNAME }}
 
   delete-tag-if-tests-failed:
     runs-on: ubuntu-latest
@@ -64,6 +100,40 @@ jobs:
           tag_name: ${{ env.TAG_TO_RMV }}
           delete_release: true 
           github_token: ${{ secrets.GH_TOKEN }} 
+
+      - name: Send slack if failed
+        id: slack
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          # For posting a rich message using Block Kit
+          payload: |
+            {
+              "text": " ❌ Tests had errors for tag ${ GITHUB_REF#refs/tags/ }. Tag will be deleted, please check logs.",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": " ❌ Tests had errors for tag ${ GITHUB_REF#refs/tags/ }. Tag will be deleted, please check logs.",
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+    
+      - name: Send Email if failed
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: Tests passed for tag ${ GITHUB_REF#refs/tags/ }
+          body: A new tag was pushed and maven test were successful.
+          to: mippolito@itba.edu.ar
+          from: ${{ secrets.SMTP_USERNAME }}
 
   build-image:
     runs-on: ubuntu-latest
@@ -91,6 +161,28 @@ jobs:
           aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ECR_URL}
           docker build --build-arg BRANCH_NAME=${BRANCH} -t ${AWS_ECR_URL}/lendaread_ecr_region:${VERSION} .
           docker push ${AWS_ECR_URL}/lendaread_ecr_region:${VERSION}
+
+      - name: Send slack when image was built
+        id: slack
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          # For posting a rich message using Block Kit
+          payload: |
+            {
+              "text": " 👷 Image built and pushed successfully tag: ${{ needs.extract-tag.outputs.TAG }}. Approval for development environment required.",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": " 👷 Image built and pushed successfully tag: ${{ needs.extract-tag.outputs.TAG }}. Approval for development environment required.",
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
   
   deploy-dev:
     runs-on: ubuntu-latest
@@ -140,6 +232,28 @@ jobs:
       - name: Update ECS Service
         run: |
           aws ecs update-service --cluster ${ECS_CLUSTER_NAME} --service ${ECS_SERVICE_NAME} --task-definition ${NEW_TASK_DEF_ARN} --force-new-deployment
+
+      - name: Send slack when dev deployed
+        id: slack
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          # For posting a rich message using Block Kit
+          payload: |
+            {
+              "text": " 🚀 Development environment was deployed! Authorization for QA environment is required. tag: ${{ needs.extract-tag.outputs.TAG }}.",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": " 🚀 Development environment was deployed! Authorization for QA environment is required. tag: ${{ needs.extract-tag.outputs.TAG }}.",
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
   deploy-qa:
     runs-on: ubuntu-latest
@@ -191,6 +305,28 @@ jobs:
         run: |
           aws ecs update-service --cluster ${ECS_CLUSTER_NAME} --service ${ECS_SERVICE_NAME} --task-definition ${NEW_TASK_DEF_ARN} --force-new-deployment
 
+      - name: Send slack when qa deployed
+        id: slack
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          # For posting a rich message using Block Kit
+          payload: |
+            {
+              "text": " 🚀 QA environment was deployed! Authorization for production environment is required. tag: ${{ needs.extract-tag.outputs.TAG }}.",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": " 🚀 QA environment was deployed! Authorization for production environment is required. tag: ${{ needs.extract-tag.outputs.TAG }}.",
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+
   deploy-prod:
     runs-on: ubuntu-latest
     environment: prod
@@ -240,5 +376,39 @@ jobs:
       - name: Update ECS Service
         run: |
           aws ecs update-service --cluster ${ECS_CLUSTER_NAME} --service ${ECS_SERVICE_NAME} --task-definition ${NEW_TASK_DEF_ARN} --force-new-deployment
+      
+      - name: Send slack when production deployed
+        id: slack
+        uses: slackapi/slack-github-action@v1.26.0
+        with:
+          # For posting a rich message using Block Kit
+          payload: |
+            {
+              "text": " 🚀 Production environment was deployed! Please pray 🔯✝️🛐. tag: ${{ needs.extract-tag.outputs.TAG }}.",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": " 🚀 Production environment was deployed! Please pray 🔯✝️🛐. tag: ${{ needs.extract-tag.outputs.TAG }}.",
+                  }
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+      
+      - name: Send Email when production deployment
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: Tag ${ GITHUB_REF#refs/tags/ } deployed to production.
+          body: A new tag was deployed to production.
+          to: mippolito@itba.edu.ar
+          from: ${{ secrets.SMTP_USERNAME }}
 
 
