@@ -1,15 +1,15 @@
 name: Deploy Architecture
 
-# on:
-#   push:
-#     branches:
-#       - main
-#
 on:
-  workflow_run:
-    workflows: ["Initialize Terraform Backend"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
+
+#on:
+#  workflow_run:
+#    workflows: ["Initialize Terraform Backend"]
+#    types:
+#      - completed
 jobs:
   terraform-init:
     runs-on: ubuntu-latest
@@ -38,12 +38,6 @@ jobs:
       with:
         terraform_version: 1.0.0
 
-
-    - name: Install AWS CLI
-      run: |
-        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-        unzip awscliv2.zip
-        sudo ./aws/install
 
     - name: Retrieve ECR Repository URL
       id: state
