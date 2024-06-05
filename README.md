@@ -11,12 +11,14 @@ The goal of the web application is to create a community of readers, where all o
 For example, let's imagine the user Marco, who enjoys reading philosophy in multiple languages. Thanks to other readers with German heritage (for example), he can borrow a philosophy book from a German author that he could not have read by going to a library in Argentina.
 
 
-## Terraform
+## Architecture
 
-The LendARead architecture is deployed through terraform as part of a 3-tier architecture. This is a simplified version as it does not hold the SPA in a S3 bucket, but it clearly exemplifies a correct separation of concerns
+The LendARead architecture is deployed through terraform as part of a 3-tier architecture. In addition, the current project builds three versions: dev, qa, prod thus providing a devops approach to the deployment of LendARead.
 
 ![Cloud Diagram](LendARead2-AWS/cloud.png)
 
+The diagram shows the three different versions of the same architecture design. Due to time constraints the actual deployments of dev and qa do not fully optimize deployments as per the diagram (it's more like two more prod enviroments
+but without database and task replication).
 ## CI/CD Setup
 
 To begin the pipeline one should first initialize the s3 bucket and dynamo table to hold both the terraform state as well as a lock to prevent incosistencies in the terraform state stored in the s3. To initialize the architecture one should push the tag `init`
