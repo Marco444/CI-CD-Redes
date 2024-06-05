@@ -41,3 +41,16 @@ Create a pipeline that includes the following elements:
 - Show how to make a deployment in the same pipeline but multi-environment. For example, first deploy the code in development and then in production.
 - Optional: Explain and show which components could be used to deploy a web page or mobile app and perform a UX/UI test.
 
+CI/CD Secrets:
+- `AWS_ACCESS_KEY_ID`: Key ID for accessing the AWS account
+- `AWS_REGION`: Region where the application is deployed
+- `AWS_SECRET_ACCESS_KEY`: Value for accessing the AWS account
+- `AWS_SESSION_TOKEN`: AWS session token
+- `DYNAMODB_TERRAFORM_LOCK_NAME`: Lock to prevent race conditions on the Terraform state stored in the S3 bucket
+- `ECR_URL`: ECR URL once deployed
+- `S3_TERRAFORM_STATE_NAME`: Bucket for storing the Terraform state
+- `SLACK_WEBHOOK_URL`: Slack webhook for notifications
+- `SMTP_SERVER`: SMTP server URL
+- `SMTP_USERNAME`: Username for the SMTP server
+- `SMTP_PASSWORD`: Password for the SMTP server
+- `SMTP_PORT`: Port for the SMTP server
