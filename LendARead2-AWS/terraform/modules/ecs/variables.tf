@@ -1,4 +1,8 @@
 
+variable "desired_count" {
+  description = "Desired Count of Tasks"
+  type        = number
+}
 variable "env" {
   description = "Enviroment type"
   type        = string

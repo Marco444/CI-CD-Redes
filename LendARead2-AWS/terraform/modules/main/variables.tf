@@ -1,3 +1,8 @@
+variable "desired_count" {
+  description = "Desired Count of Tasks"
+  type        = number
+}
+
 variable "ecr_repository_url" {
   description = "URL of ECR repository"
   type        = string

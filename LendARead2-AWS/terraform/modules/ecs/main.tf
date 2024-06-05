@@ -54,7 +54,7 @@ resource "aws_ecs_service" "lendaread_service" {
   name            = format("%s-%s", "lendaread_service", var.env)
   cluster         = aws_ecs_cluster.lendaread_cluster.id
   task_definition = aws_ecs_task_definition.lendaread_api_task.arn
-  desired_count   = 1
+  desired_count   = var.desired_count
   launch_type     = "FARGATE"
 
   network_configuration {
