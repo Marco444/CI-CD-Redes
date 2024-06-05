@@ -43,8 +43,8 @@ export default function Landing(){
             <section id="hero" style={{backgroundColor: '#D1FFBD', paddingBottom: '100px',}}>
                 <div className="container" style={{textAlign: 'start'}}>
                     <div className="text-container">
-                        <h1>{t('landing.hero.title')}</h1>
-                        <h2>{t('landing.hero.subtitle')}</h2>
+                        <h1>{t('landing.hero.title')} 2 </h1>
+                        <h2>{t('landing.hero.subtitle')} 2 </h2>
 
                         <div className="d-flex justify-content-center mt-4">
                             <Link to="/discovery" className="btn-get-started scrollto" style={{textDecoration: 'none'}}>{t('landing.hero.btn')}</Link>
