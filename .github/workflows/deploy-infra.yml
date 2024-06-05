@@ -1,15 +1,15 @@
 name: Deploy Architecture
 
-on:
-  push:
-    branches:
-      - main
-
 #on:
-#  workflow_run:
-#    workflows: ["Initialize Terraform Backend"]
-#    types:
-#      - completed
+#  push:
+#    branches:
+#      - main
+
+on:
+  workflow_run:
+    workflows: ["Initialize Terraform Backend"]
+    types:
+      - completed
 jobs:
   terraform-init:
     runs-on: ubuntu-latest
@@ -64,17 +64,17 @@ jobs:
       run: |
         cd LendARead2-AWS/terraform/dev
         terraform init
-        terraform apply -auto-approve -var-file=dev.tfvars -lock=false 
+        terraform apply -auto-approve -var-file=dev.tfvars 
 
     - name: Initialize QA Enviroment
       run: |
         cd LendARead2-AWS/terraform/qa
         terraform init
-        terraform apply -auto-approve -var-file=qa.tfvars -lock=false
+        terraform apply -auto-approve -var-file=qa.tfvars 
 
 
     - name: Initialize Prod Enviroment
       run: |
         cd LendARead2-AWS/terraform/prod
         terraform init
-        terraform apply -auto-approve -var-file=prod.tfvars  -lock=false
+        terraform apply -auto-approve -var-file=prod.tfvars 

@@ -79,7 +79,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
       AWS_BUCKET_NAME_TERRAFORM_STATE: ${{ secrets.S3_TERRAFORM_STATE_NAME }}
-      AWS_ECR_URL: "516697223383.dkr.ecr.us-east-1.amazonaws.com"
+      AWS_ECR_URL: ${{ secrets.ECR_URL }}
       AWS_DYNAMODB_NAME: ${{ secrets.DYNAMODB_TERRAFORM_LOCK_NAME }}
     steps:
       - name: Checkout repository
@@ -107,7 +107,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
       AWS_BUCKET_NAME_TERRAFORM_STATE: ${{ secrets.S3_TERRAFORM_STATE_NAME }}
-      AWS_ECR_URL: "516697223383.dkr.ecr.us-east-1.amazonaws.com"
+      AWS_ECR_URL: ${{ secrets.ECR_URL }}
       AWS_DYNAMODB_NAME: ${{ secrets.DYNAMODB_TERRAFORM_LOCK_NAME }}
     steps:
       - name: Retrieve ECS Cluster and Service Names
@@ -157,7 +157,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
       AWS_BUCKET_NAME_TERRAFORM_STATE: ${{ secrets.S3_TERRAFORM_STATE_NAME }}
-      AWS_ECR_URL: "516697223383.dkr.ecr.us-east-1.amazonaws.com"
+      AWS_ECR_URL: ${{ secrets.ECR_URL }}
       AWS_DYNAMODB_NAME: ${{ secrets.DYNAMODB_TERRAFORM_LOCK_NAME }}
     steps:
       - name: Retrieve ECS Cluster and Service Names
@@ -207,7 +207,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
       AWS_BUCKET_NAME_TERRAFORM_STATE: ${{ secrets.S3_TERRAFORM_STATE_NAME }}
-      AWS_ECR_URL: "516697223383.dkr.ecr.us-east-1.amazonaws.com"
+      AWS_ECR_URL: ${{ secrets.ECR_URL }}
       AWS_DYNAMODB_NAME: ${{ secrets.DYNAMODB_TERRAFORM_LOCK_NAME }}
     steps:
       - name: Retrieve ECS Cluster and Service Names
