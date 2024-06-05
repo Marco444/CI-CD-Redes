@@ -23,6 +23,8 @@ jobs:
           echo "TAG=$PARSED" >> $GITHUB_OUTPUT
   run-tests:
     runs-on: ubuntu-latest
+    needs:
+      - extract-tag
     outputs:
       TEST_RESULT: ${{ steps.test.outputs.TEST_RESULT }}
     steps:
@@ -54,13 +56,13 @@ jobs:
           # For posting a rich message using Block Kit
           payload: |
             {
-              "text": "✅ Test passed for tag ${ GITHUB_REF#refs/tags/ }",
+              "text": "✅ Test passed for tag ${{ needs.extract-tag.outputs.TAG }}",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "✅ Test passed for tag ${ GITHUB_REF#refs/tags/ }"
+                    "text": "✅ Test passed for tag ${{ needs.extract-tag.outputs.TAG }}"
                   }
                 }
               ]
@@ -77,7 +79,7 @@ jobs:
           server_port: ${{ secrets.SMTP_PORT }}
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: Tests passed for tag ${ GITHUB_REF#refs/tags/ }
+          subject: Tests passed for tag ${{ needs.extract-tag.outputs.TAG }}
           body: A new tag was pushed and maven test were successful.
           to: mippolito@itba.edu.ar
           from: ${{ secrets.SMTP_USERNAME }}
@@ -108,13 +110,13 @@ jobs:
           # For posting a rich message using Block Kit
           payload: |
             {
-              "text": " ❌ Tests had errors for tag ${ GITHUB_REF#refs/tags/ }. Tag will be deleted, please check logs.",
+              "text": " ❌ Tests had errors for tag ${{ needs.extract-tag.outputs.TAG }}. Tag will be deleted, please check logs.",
               "blocks": [
                 {
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": " ❌ Tests had errors for tag ${ GITHUB_REF#refs/tags/ }. Tag will be deleted, please check logs."
+                    "text": " ❌ Tests had errors for tag ${{ needs.extract-tag.outputs.TAG }}. Tag will be deleted, please check logs."
                   }
                 }
               ]
@@ -130,7 +132,7 @@ jobs:
           server_port: ${{ secrets.SMTP_PORT }}
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: Tests passed for tag ${ GITHUB_REF#refs/tags/ }
+          subject: Tests passed for tag ${{ needs.extract-tag.outputs.TAG }}
           body: A new tag was pushed and maven test were successful.
           to: mippolito@itba.edu.ar
           from: ${{ secrets.SMTP_USERNAME }}
@@ -406,7 +408,7 @@ jobs:
           server_port: ${{ secrets.SMTP_PORT }}
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: Tag ${ GITHUB_REF#refs/tags/ } deployed to production.
+          subject: Tag ${{ needs.extract-tag.outputs.TAG }} deployed to production.
           body: A new tag was deployed to production.
           to: mippolito@itba.edu.ar
           from: ${{ secrets.SMTP_USERNAME }}
