@@ -8,4 +8,5 @@ module "main" {
   rds_password              = var.rds_password
   env                       = "dev"
   ecr_repository_url        = var.ecr_repository_url
+  desired_count             = 1
 }

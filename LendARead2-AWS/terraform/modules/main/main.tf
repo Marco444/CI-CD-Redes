@@ -35,6 +35,7 @@ module "ecs" {
   cpu_architecture   = var.ecs_task_cpu_architecture
   ecs_log_group      = module.cloudwatch.ecs_log_group
   env                = var.env
+  desired_count      = var.desired_count
 }
 
 module "alb" {
