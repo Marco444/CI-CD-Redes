@@ -30,18 +30,24 @@ git push origin init
 
 This will trigger a Github action that will create the s3 bucket and dynamo table. After this is complete one can push to the main branch, this will run the `terraform init` and `terraform apply` using the state defined in the last step. Whatever changes are done to the application, or the infraestructure itself, will be updated in the deployment. The key here is that because the state is stored in a s3 only the changes to the current architecture will be made, if nothing of the infraestructure changed then only the docker image will be updated. 
 
-## CI/CD Requirements
+## CI/CD Environments:
+To run the demo, the repository needs 3 environments to run:
+- dev
+- qa
+- prod
+Configure each environment with the corresponding approval permits
 
-Create a pipeline that includes the following elements:
+## CI/CD Flow
+To trigger a workflow for the deployment, the creation of a Release with a new tag is necessary:
+- The tag must follow the regex: `v[0-9]+.[0-9]+.[0-9]+`
+- A job to extract the value of the newly created tag will run
+- After that, a job that will check all the tests in the application will run. If it runs successfully, it will notify the authors and continue with the deployment
+- If the tests fail, the tag will be deleted from the repo. This way, all tags in the repo will contain a valid version
+- Once the tests finished, a new job that will create the docker image and push it to the registry will be runned
+- Approval for deploying in dev is needed, so, after the approval, a new job will modify the terraform files to update the state of the environment, changing the version of the deployed app to the new one
+- Same with qa and prod
 
-- Have a code repository in Git that, every time a push occurs, builds the code and deploys it in a container (on-premise with Docker, deploying it in Kubernetes on-premise or using EKS or ECS on AWS), on a virtual machine, or in a serverless execution service (for example, Lambda).
-- Prior to deployment, execute the unit tests of the code.
-- Send a notification to the DevOps team if the deployment was successful. If it was unsuccessful, send a notification, stop the deployment, and perform a rollback.
-- Before deployment in the environment, create a manual approval process for a select group of people.
-- Show how to make a deployment in the same pipeline but multi-environment. For example, first deploy the code in development and then in production.
-- Optional: Explain and show which components could be used to deploy a web page or mobile app and perform a UX/UI test.
-
-CI/CD Secrets:
+## CI/CD Secrets:
 - `AWS_ACCESS_KEY_ID`: Key ID for accessing the AWS account
 - `AWS_REGION`: Region where the application is deployed
 - `AWS_SECRET_ACCESS_KEY`: Value for accessing the AWS account
