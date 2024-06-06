@@ -35,6 +35,8 @@ To run the demo, the repository needs 3 environments to run:
 - dev
 - qa
 - prod
+
+  
 Configure each environment with the corresponding approval permits
 
 ## CI/CD Flow
