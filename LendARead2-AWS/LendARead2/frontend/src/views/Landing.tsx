@@ -40,7 +40,7 @@ export default function Landing(){
                 <meta charSet="utf-8"/>
                 <link rel="canonical" href="http://mysite.com/example"/>
             </Helmet>
-            <section id="hero" style={{backgroundColor: '#D0DCD0', paddingBottom: '100px',}}>
+            <section id="hero" style={{backgroundColor: '#FFDDDD', paddingBottom: '100px',}}>
                 <div className="container" style={{textAlign: 'start'}}>
                     <div className="text-container">
                         <h1>{t('landing.hero.title')} 2 </h1>
