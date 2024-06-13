@@ -10,7 +10,7 @@ final public class Location {
     private boolean active;
 
     @Column(length = 100, nullable = false)
-    private String zipcode;
+    // private String zipcode;
     @Column(length = 100, nullable = false)
     private String locality;
     @Column(length = 100, nullable = false)
